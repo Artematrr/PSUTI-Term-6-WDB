@@ -49,6 +49,7 @@ const Events = sequelize.define(
 		},
 	},
 	{
+		// description = title, если он не указан
 		hooks: {
 			beforeCreate: (event, options) => {
 				if (!event.description) {
@@ -93,28 +94,28 @@ Users.hasMany(Events, { foreignKey: 'createdBy' })
 const authDB = async () => {
 	try {
 		await sequelize.authenticate()
-		console.log('Соединение с БД установлено!')
+		console.debug('Соединение с БД установлено!')
 	} catch (error) {
-		console.log('Соединение с БД не установлено. Ошибка:', error)
+		console.debug(`Соединение с БД не установлено. Ошибка: ${error}`)
 	}
 }
 
 const resetDB = async () => {
 	try {
 		await sequelize.sync({ force: true })
-		console.log('Таблицы созданы!')
+		console.debug('Таблицы созданы!')
 	} catch (error) {
-		console.log('Таблицы не cозданы. Ошибка:', error)
+		console.debug(`Таблицы не созданы. Ошибка: ${error}`)
 	}
 }
 
 const syncDB = async () => {
 	try {
 		await sequelize.sync()
-		console.log('Таблицы синхронизированы!')
+		console.debug('Таблицы синхронизированы!')
 	} catch (error) {
-		console.log('Таблицы не синхронизированы. Ошибка:', error)
+		console.debug(`Таблицы не синхронизированы. Ошибка: ${error}`)
 	}
 }
 
-export { sequelize, authDB, syncDB, resetDB, Events, Users }
+export { sequelize, Events, Users, authDB, syncDB, resetDB }
