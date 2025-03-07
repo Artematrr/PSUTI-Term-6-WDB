@@ -60,52 +60,12 @@ const Events = sequelize.define(
 	}
 )
 
-const Users = sequelize.define('users', {
-	id: {
-		type: Sequelize.INTEGER,
-		allowNull: false,
-		primaryKey: true,
-		autoIncrement: true,
-	},
-	name: {
-		type: Sequelize.STRING,
-		allowNull: false,
-		validate: {
-			notEmpty: true,
-		},
-	},
-	email: {
-		type: Sequelize.STRING,
-		allowNull: false,
-		unique: true,
-		validate: {
-			isEmail: true,
-		},
-	},
-	createdAt: {
-		type: Sequelize.DATE,
-		allowNull: false,
-		defaultValue: Sequelize.NOW,
-	},
-})
-
-Users.hasMany(Events, { foreignKey: 'createdBy' })
-
 const authDB = async () => {
 	try {
 		await sequelize.authenticate()
 		console.debug('Соединение с БД установлено!')
 	} catch (error) {
 		console.debug(`Соединение с БД не установлено. Ошибка: ${error}`)
-	}
-}
-
-const resetDB = async () => {
-	try {
-		await sequelize.sync({ force: true })
-		console.debug('Таблицы созданы!')
-	} catch (error) {
-		console.debug(`Таблицы не созданы. Ошибка: ${error}`)
 	}
 }
 
@@ -118,4 +78,4 @@ const syncDB = async () => {
 	}
 }
 
-export { sequelize, Events, Users, authDB, syncDB, resetDB }
+export { sequelize, Events, authDB, syncDB }
