@@ -2,10 +2,10 @@ import express, { json } from 'express'
 import 'dotenv/config'
 import cors from 'cors'
 import morgan from 'morgan'
-import { authDB, syncDB, resetDB } from './config/db.js'
-import { eventsRouter, usersRouter, baseRouter } from './api/routes.js'
-import { specs, swaggerUi } from './docs/swagger.js'
-import { errorHandler } from './middleware/errorHandler.js'
+import { authDB, syncDB } from './configs/db.js'
+import { eventRouter, userRouter, baseRouter } from './routes/routes.js'
+import { specs, swaggerUi } from './configs/swagger.js'
+import { errorHandler } from './middlewares/errorHandler.js'
 
 const app = express()
 const port = process.env.APP_PORT
@@ -21,8 +21,8 @@ app.use(cors())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
 // Маршруты
-app.use('/events', eventsRouter)
-app.use('/users', usersRouter)
+app.use('/events', eventRouter)
+app.use('/users', userRouter)
 app.use('/', baseRouter)
 
 // Глобальный обработчик ошибок
@@ -32,9 +32,10 @@ async function startServer() {
 	try {
 		await authDB()
 		await syncDB()
-		// await resetDB() // Стереть все данные БД
 
-		app.listen(port, () => console.debug(`Сервер запущен на порту ${port}`))
+		app.listen(port, () =>
+			console.debug(`Сервер запущен на порту http://localhost:${port}`)
+		)
 	} catch (error) {
 		console.error(`Ошибка при старте сервера: ${error}`)
 		process.exit(1) // Завершение процесса с кодом ошибки
