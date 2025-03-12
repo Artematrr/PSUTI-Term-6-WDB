@@ -3,7 +3,6 @@ import EventService from '../services/EventService.js'
 class EventController {
 	async getAll(req, res, next) {
 		const { startDate, endDate } = req.query
-
 		try {
 			const events = await EventService.getAllEvents(startDate, endDate)
 
