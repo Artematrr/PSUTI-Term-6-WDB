@@ -13,53 +13,6 @@ const sequelize = new Sequelize(db_name, db_user, db_password, {
 	dialect: 'postgres',
 })
 
-const Events = sequelize.define(
-	'event',
-	{
-		id: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-			primaryKey: true,
-			autoIncrement: true,
-		},
-		title: {
-			type: Sequelize.STRING,
-			allowNull: false,
-			validate: {
-				notEmpty: true,
-			},
-		},
-		description: {
-			type: Sequelize.STRING,
-			allowNull: false,
-			defaultValue: '',
-		},
-		date: {
-			type: Sequelize.DATE,
-			allowNull: false,
-			defaultValue: Sequelize.NOW,
-		},
-		createdBy: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-			references: {
-				model: 'users',
-				key: 'id',
-			},
-		},
-	},
-	{
-		// description = title, если он не указан
-		hooks: {
-			beforeCreate: (event, options) => {
-				if (!event.description) {
-					event.description = event.title
-				}
-			},
-		},
-	}
-)
-
 const authDB = async () => {
 	try {
 		await sequelize.authenticate()
@@ -78,4 +31,4 @@ const syncDB = async () => {
 	}
 }
 
-export { sequelize, Events, authDB, syncDB }
+export { sequelize, authDB, syncDB }

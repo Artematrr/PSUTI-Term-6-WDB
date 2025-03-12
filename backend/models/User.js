@@ -1,6 +1,7 @@
-import { sequelize } from "../config/db";
+import { sequelize } from '../configs/db.js'
+import { Sequelize } from 'sequelize'
 
-const User = sequelize.define('users', {
+const User = sequelize.define('user', {
 	id: {
 		type: Sequelize.INTEGER,
 		allowNull: false,
@@ -21,15 +22,7 @@ const User = sequelize.define('users', {
 		validate: {
 			isEmail: true,
 		},
-	},
-	createdAt: {
-		type: Sequelize.DATE,
-		allowNull: false,
-		defaultValue: Sequelize.NOW,
-	},
+	}
 })
 
-User.hasMany(Events, { foreignKey: 'createdBy' })
-
-
-export default User;
+export default User
