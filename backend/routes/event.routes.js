@@ -7,7 +7,9 @@ const eventRouter = Router()
  * @swagger
  * /events:
  *   get:
- *     summary: Получить список мероприятий
+ *     summary: Получить список мероприятий (требуется аутентификация)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: startDate
@@ -33,14 +35,18 @@ const eventRouter = Router()
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Event'
+ *       401:
+ *         description: Не авторизован
  */
-eventRouter.get('/', EventController.getAll)
+// eventRouter.get('/', EventController.getAll)
 
 /**
  * @swagger
  * /events/{id}:
  *   get:
- *     summary: Получить мероприятие по ID
+ *     summary: Получить мероприятие по ID (требуется аутентификация)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -51,6 +57,8 @@ eventRouter.get('/', EventController.getAll)
  *     responses:
  *       200:
  *         description: Мероприятие найдено
+ *       401:
+ *         description: Не авторизован
  *       404:
  *         description: Мероприятие не найдено
  */
@@ -60,7 +68,9 @@ eventRouter.get('/:id', EventController.getOne)
  * @swagger
  * /events:
  *   post:
- *     summary: Создать новое мероприятие
+ *     summary: Создать новое мероприятие (требуется аутентификация)
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -72,6 +82,8 @@ eventRouter.get('/:id', EventController.getOne)
  *         description: Мероприятие создано
  *       400:
  *         description: Неверные данные
+ *       401:
+ *         description: Не авторизован
  */
 eventRouter.post('/', EventController.create)
 
@@ -79,7 +91,9 @@ eventRouter.post('/', EventController.create)
  * @swagger
  * /events/{id}:
  *   put:
- *     summary: Обновить мероприятие
+ *     summary: Обновить мероприятие (требуется аутентификация)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -95,6 +109,8 @@ eventRouter.post('/', EventController.create)
  *     responses:
  *       200:
  *         description: Мероприятие обновлено
+ *       401:
+ *         description: Не авторизован
  *       404:
  *         description: Мероприятие не найдено
  */
@@ -104,7 +120,9 @@ eventRouter.put('/:id', EventController.update)
  * @swagger
  * /events/{id}:
  *   delete:
- *     summary: Удалить мероприятие
+ *     summary: Удалить мероприятие (требуется аутентификация)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -114,9 +132,11 @@ eventRouter.put('/:id', EventController.update)
  *     responses:
  *       200:
  *         description: Мероприятие удалено
+ *       401:
+ *         description: Не авторизован
  *       404:
  *         description: Мероприятие не найдено
  */
 eventRouter.delete('/:id', EventController.delete)
 
-export default eventRouter 
+export default eventRouter

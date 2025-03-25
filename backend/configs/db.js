@@ -9,8 +9,9 @@ const db_port = process.env.DB_PORT
 
 const sequelize = new Sequelize(db_name, db_user, db_password, {
 	host: db_host,
-	port: db_port,
+	port: db_port, 
 	dialect: 'postgres',
+	logging: false,
 })
 
 const authDB = async () => {
@@ -19,15 +20,17 @@ const authDB = async () => {
 		console.debug('Соединение с БД установлено!')
 	} catch (error) {
 		console.debug(`Соединение с БД не установлено. Ошибка: ${error}`)
+		throw error
 	}
 }
 
-const syncDB = async () => {
+const syncDB = async (force = false) => {
 	try {
-		await sequelize.sync()
-		console.debug('Таблицы синхронизированы!')
+		await sequelize.sync({ force }) 
+		console.debug(`Таблицы синхронизированы! ${force ? '(Со сбросом)' : ''}`)
 	} catch (error) {
 		console.debug(`Таблицы не синхронизированы. Ошибка: ${error}`)
+		throw error // Пробросим ошибку, чтобы увидеть ее в консоли
 	}
 }
 

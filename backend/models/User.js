@@ -22,7 +22,18 @@ const User = sequelize.define('user', {
 		validate: {
 			isEmail: true,
 		},
+	},
+	password: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			notEmpty: true,
+		},
+	},
+	},
+	{
+		freezeTableName: true,
 	}
-})
+)
 
 export default User

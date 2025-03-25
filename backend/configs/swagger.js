@@ -18,6 +18,15 @@ const options = {
 				description: 'Dev',
 			},
 		],
+		components: {
+			securitySchemes: {
+				bearerAuth: {
+					type: 'http',
+					scheme: 'bearer',
+					bearerFormat: 'JWT',
+				},
+			},
+		},
 	},
 	apis: ['./routes/*.js'],
 }
