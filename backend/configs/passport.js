@@ -15,7 +15,13 @@ passport.use(
 		try {
 			const user = await User.findByPk(payload.id)
 			if (user) {
-				return done(null, user)
+				//  return done(null, user)
+				return done(null, {
+					id: user.id,
+					name: user.name,
+					email: user.email,
+					role: user.role,
+				})
 			}
 			return done(null, false)
 		} catch (error) {

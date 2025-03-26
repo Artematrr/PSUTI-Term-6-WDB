@@ -22,7 +22,12 @@ class AuthService {
 			}
 
 			const hashedPassword = await bcrypt.hash(password, 10)
-			const user = await User.create({ name, email, password: hashedPassword })
+			const user = await User.create({
+				name,
+				email,
+				password: hashedPassword,
+				role: 'user',
+			})
 
 			return { user }
 		} catch (error) {
@@ -51,9 +56,16 @@ class AuthService {
 				throw createValidationError('Неверный пароль')
 			}
 
-			const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-				expiresIn: '1h',
-			})
+			const token = jwt.sign(
+				{
+					id: user.id,
+					role: user.role,
+				},
+				process.env.JWT_SECRET,
+				{
+					expiresIn: '1h',
+				}
+			)
 
 			return { user, token }
 		} catch (error) {
@@ -65,4 +77,4 @@ class AuthService {
 	}
 }
 
-export default new AuthService() 
+export default new AuthService()

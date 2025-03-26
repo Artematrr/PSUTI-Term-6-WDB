@@ -1,4 +1,10 @@
-import { ValidationError, NotFoundError, ServerError } from './errors.js'
+import {
+	ValidationError,
+	NotFoundError,
+	ServerError,
+	UnauthorizedError,
+	ForbiddenError,
+} from './errors.js'
 
 /**
  * Создает ошибку 400 Bad Request
@@ -32,4 +38,28 @@ function createServerError(message, originalError = null) {
 	return new ServerError(message, originalError)
 }
 
-export { createValidationError, createNotFoundError, createServerError }
+/**
+ * Создает ошибку 401 Unauthorized
+ * @param {string} message Сообщение об ошибке
+ * @returns {UnauthorizedError} Ошибка 401 Unauthorized
+ */
+function createUnauthorizedError(message) {
+	return new UnauthorizedError(message)
+}
+
+/**
+ * Создает ошибку 403 Forbidden
+ * @param {string} message Сообщение об ошибке
+ * @returns {ForbiddenError} Ошибка 403 Forbidden
+ */
+function createForbiddenError(message) {
+	return new ForbiddenError(message)
+}
+
+export {
+	createValidationError,
+	createNotFoundError,
+	createServerError,
+	createUnauthorizedError,
+	createForbiddenError,
+}

@@ -25,4 +25,23 @@ class ValidationError extends CustomError {
 	}
 }
 
-export { CustomError, NotFoundError, ServerError, ValidationError }
+class UnauthorizedError extends CustomError {
+	constructor(message) {
+		super(message || 'Не авторизован', 401)
+	}
+}
+
+class ForbiddenError extends CustomError {
+	constructor(message) {
+		super(message || 'Доступ запрещен', 403)
+	}
+}
+
+export {
+	CustomError,
+	NotFoundError,
+	ServerError,
+	ValidationError,
+	UnauthorizedError,
+	ForbiddenError,
+}

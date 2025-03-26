@@ -5,9 +5,9 @@ const publicRouter = Router()
 
 /**
  * @swagger
- * /public/events:
+ * /events:
  *   get:
- *     summary: Получить список мероприятий (публичный доступ)
+ *     summary: Получить список мероприятий
  *     parameters:
  *       - in: query
  *         name: startDate

@@ -5,9 +5,16 @@ import morgan from 'morgan'
 import { authDB, syncDB } from './configs/db.js'
 import './models/index.js'
 import { seedDB } from './configs/seedDb.js'
-import { eventRouter, userRouter, baseRouter, authRouter, publicRouter, authenticateJWT } from './routes/routes.js'
+import {
+	eventRouter,
+	userRouter,
+	baseRouter,
+	authRouter,
+	publicRouter,
+} from './routes/routes.js'
+import { authenticateJWT, checkRole } from './middlewares/auth.middleware.js'
 import { specs, swaggerUi } from './configs/swagger.js'
-import { errorHandler } from './middlewares/errorHandler.js'
+import { errorHandler } from './middlewares/error.middleware.js'
 import passport from './configs/passport.js'
 
 const app = express()
@@ -29,13 +36,13 @@ app.use(passport.initialize())
 // Документация API
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
-// Публичные маршруты 
+// Публичные маршруты
 app.use('/', publicRouter)
 app.use('/auth', authRouter)
 
 // Требующие аутентификации маршруты
 app.use('/events', authenticateJWT, eventRouter)
-app.use('/users', authenticateJWT, userRouter)
+app.use('/users', authenticateJWT, checkRole('admin'), userRouter)
 app.use('/', baseRouter)
 
 // Глобальный обработчик ошибок
@@ -45,7 +52,7 @@ async function startServer() {
 	try {
 		await authDB()
 		await syncDB(RESET_DB)
-		
+
 		if (RESET_DB) {
 			await seedDB()
 		}

@@ -30,7 +30,12 @@ class EventController {
 
 	async create(req, res, next) {
 		try {
-			const event = await EventService.createEvent(req.body)
+			const eventData = {
+				...req.body,
+				createdBy: req.user.id,
+			}
+
+			const event = await EventService.createEvent(eventData)
 
 			res.status(201).json({
 				status: 'success',
@@ -44,7 +49,11 @@ class EventController {
 
 	async update(req, res, next) {
 		try {
-			const result = await EventService.updateEvent(req.params.id, req.body)
+			const result = await EventService.updateEvent(
+				req.params.id,
+				req.body,
+				req.user
+			)
 
 			res.status(200).json({
 				status: 'success',
@@ -58,7 +67,7 @@ class EventController {
 
 	async delete(req, res, next) {
 		try {
-			await EventService.deleteEvent(req.params.id)
+			await EventService.deleteEvent(req.params.id, req.user)
 
 			res.status(200).json({
 				status: 'success',

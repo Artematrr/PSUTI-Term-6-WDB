@@ -11,8 +11,8 @@ class AuthController {
 				data: {
 					id: user.id,
 					name: user.name,
-					email: user.email
-				}
+					email: user.email,
+				},
 			})
 		} catch (error) {
 			next(error)
@@ -26,7 +26,7 @@ class AuthController {
 			res.status(200).json({
 				status: 'success',
 				message: 'Авторизация успешна',
-				token
+				token,
 			})
 		} catch (error) {
 			next(error)
@@ -34,4 +34,4 @@ class AuthController {
 	}
 }
 
-export default new AuthController() 
+export default new AuthController()

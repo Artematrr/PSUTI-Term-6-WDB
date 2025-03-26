@@ -4,6 +4,7 @@ import {
 	createValidationError,
 	createNotFoundError,
 	createServerError,
+	createForbiddenError,
 } from '../throws/index.js'
 
 class EventService {
@@ -60,11 +61,17 @@ class EventService {
 		}
 	}
 
-	async updateEvent(id, eventData) {
+	async updateEvent(id, eventData, user) {
 		try {
 			const event = await Event.findByPk(id)
 			if (!event) {
 				throw createNotFoundError(`Мероприятие с ID ${id} не найдено`)
+			}
+
+			if (user.role !== 'admin' && event.createdBy !== user.id) {
+				throw createForbiddenError(
+					'У вас нет прав для редактирования этого мероприятия'
+				)
 			}
 
 			const oldEvent = { ...event.toJSON() }
@@ -82,11 +89,17 @@ class EventService {
 		}
 	}
 
-	async deleteEvent(id) {
+	async deleteEvent(id, user) {
 		try {
 			const event = await Event.findByPk(id)
 			if (!event) {
 				throw createNotFoundError(`Мероприятие с ID ${id} не найдено`)
+			}
+
+			if (user.role !== 'admin' && event.createdBy !== user.id) {
+				throw createForbiddenError(
+					'У вас нет прав для удаления этого мероприятия'
+				)
 			}
 
 			await event.destroy()
