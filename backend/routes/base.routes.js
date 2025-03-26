@@ -11,4 +11,4 @@ baseRouter.all('*', (req, res, next) => {
 	next(createNotFoundError(`Несуществующий маршрут ${req.originalUrl}`))
 })
 
-export default baseRouter 
+export default baseRouter

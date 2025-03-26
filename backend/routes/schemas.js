@@ -10,20 +10,20 @@
  *       properties:
  *         id:
  *           type: integer
- *           description: ID события
+ *           description: ID мероприятия
  *         title:
  *           type: string
- *           description: Название события
+ *           description: Название мероприятия
  *         description:
  *           type: string
- *           description: Описание события
+ *           description: Описание мероприятия
  *         date:
  *           type: string
  *           format: date
- *           description: Дата события
+ *           description: Дата мероприятия
  *         createdBy:
  *           type: integer
- *           description: ID создателя события
+ *           description: ID создателя мероприятия
  *     User:
  *       type: object
  *       required:
@@ -39,6 +39,10 @@
  *         email:
  *           type: string
  *           description: Email пользователя
+ *         role:
+ *           type: string
+ *           enum: [user, admin]
+ *           description: Роль пользователя
  */
 
-// Этот файл не экспортирует ничего, он просто предоставляет схемы для Swagger 
+// Этот файл не экспортирует ничего, он просто предоставляет схемы для Swagger

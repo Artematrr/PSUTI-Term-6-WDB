@@ -37,6 +37,9 @@ const Event = sequelize.define(
 		},
 	},
 	{
+		freezeTableName: true,
+	},
+	{
 		// description = title, если он не указан
 		hooks: {
 			beforeCreate: (event, options) => {

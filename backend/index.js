@@ -3,12 +3,25 @@ import 'dotenv/config'
 import cors from 'cors'
 import morgan from 'morgan'
 import { authDB, syncDB } from './configs/db.js'
-import { eventRouter, userRouter, baseRouter } from './routes/routes.js'
+import './models/index.js'
+import { seedDB } from './configs/seedDb.js'
+import {
+	eventRouter,
+	userRouter,
+	baseRouter,
+	authRouter,
+	publicRouter,
+} from './routes/routes.js'
+import { authenticateJWT, checkRole } from './middlewares/auth.middleware.js'
 import { specs, swaggerUi } from './configs/swagger.js'
-import { errorHandler } from './middlewares/errorHandler.js'
+import { errorHandler } from './middlewares/error.middleware.js'
+import passport from './configs/passport.js'
 
 const app = express()
 const port = process.env.APP_PORT
+
+// Сброс базы данных при запуске
+const RESET_DB = true
 
 // Логирование
 app.use(morgan('[:method] :url'))
@@ -17,12 +30,19 @@ app.use(morgan('[:method] :url'))
 app.use(json())
 app.use(cors())
 
+// Инициализация Passport
+app.use(passport.initialize())
+
 // Документация API
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
-// Маршруты
-app.use('/events', eventRouter)
-app.use('/users', userRouter)
+// Публичные маршруты
+app.use('/', publicRouter)
+app.use('/auth', authRouter)
+
+// Требующие аутентификации маршруты
+app.use('/events', authenticateJWT, eventRouter)
+app.use('/users', authenticateJWT, checkRole('admin'), userRouter)
 app.use('/', baseRouter)
 
 // Глобальный обработчик ошибок
@@ -31,7 +51,11 @@ app.use(errorHandler)
 async function startServer() {
 	try {
 		await authDB()
-		await syncDB()
+		await syncDB(RESET_DB)
+
+		if (RESET_DB) {
+			await seedDB()
+		}
 
 		app.listen(port, () =>
 			console.debug(`Сервер запущен на порту http://localhost:${port}`)
