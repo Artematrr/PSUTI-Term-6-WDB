@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { CustomError } from '../throws';
+import { CustomError } from '@throws';
 
 /**
  * Middleware для обработки ошибок

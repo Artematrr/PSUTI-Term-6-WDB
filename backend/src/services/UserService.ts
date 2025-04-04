@@ -1,11 +1,11 @@
-import { User, IUserData, ICurrentUser, UserRole } from '../models';
+import { User, IUserData, ICurrentUser, UserRole } from '@models';
 import {
   createValidationError,
   createNotFoundError,
   createServerError,
   createForbiddenError,
   CustomError,
-} from '../throws';
+} from '@throws';
 
 class UserService {
   async getAllUsers(): Promise<User[]> {

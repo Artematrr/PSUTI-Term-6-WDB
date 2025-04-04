@@ -1,12 +1,12 @@
 import { Op } from 'sequelize';
-import { Event, IEventData, ICurrentUser, IEventUpdateResult } from '../models';
+import { Event, IEventData, ICurrentUser, IEventUpdateResult } from '@models';
 import {
   createValidationError,
   createNotFoundError,
   createServerError,
   createForbiddenError,
   CustomError,
-} from '../throws';
+} from '@throws';
 
 class EventService {
   async getAllEvents(startDate?: Date, endDate?: Date): Promise<Event[]> {

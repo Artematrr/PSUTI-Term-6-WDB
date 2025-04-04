@@ -5,7 +5,7 @@ import {
   UnauthorizedError,
   ForbiddenError,
   CustomError,
-} from './errors';
+} from '@throws/errors';
 
 /**
  * Создает ошибку 400 Bad Request

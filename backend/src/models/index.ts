@@ -1,5 +1,5 @@
-import User from './User';
-import Event from './Event';
+import User from '@models/User';
+import Event from '@models/Event';
 
 User.hasMany(Event, { foreignKey: 'createdBy' });
 Event.belongsTo(User, { foreignKey: 'createdBy' });

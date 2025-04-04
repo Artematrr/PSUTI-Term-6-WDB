@@ -2,20 +2,20 @@ import express, { json } from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import morgan from 'morgan';
-import { authDB, syncDB } from './configs/db';
-import './models';
-import { seedDB } from './configs/seedDb';
+import { authDB, syncDB } from '@configs';
+import '@models';
+import { seedDB } from '@configs';
 import {
   eventRouter,
   userRouter,
   baseRouter,
   authRouter,
   publicRouter,
-} from './routes';
-import { authenticateJWT, checkRole } from './middlewares/auth.middleware';
-import { specs, swaggerUi } from './configs/swagger';
-import { errorHandler } from './middlewares/error.middleware';
-import passport from './configs/passport';
+} from '@routes';
+import { authenticateJWT, checkRole } from '@middlewares';
+import { specs, swaggerUi } from '@configs';
+import { errorHandler } from '@middlewares';
+import { passport } from '@configs';
 
 const app = express();
 const port = process.env.APP_PORT;

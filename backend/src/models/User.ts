@@ -1,4 +1,4 @@
-import { sequelize } from '../configs/db';
+import { sequelize } from '@configs';
 import { DataTypes, Model } from 'sequelize';
 
 export class User extends Model {

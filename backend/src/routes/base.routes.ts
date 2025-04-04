@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { createNotFoundError } from '../throws';
+import { createNotFoundError } from '@throws';
 
 const baseRouter: Router = Router();
 

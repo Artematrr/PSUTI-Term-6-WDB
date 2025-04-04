@@ -1,16 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import passport from '../configs/passport';
+import { passport } from '@configs';
 import {
   createUnauthorizedError,
   createForbiddenError,
   createServerError,
   CustomError,
-} from '../throws';
-import { ICurrentUser } from '../models';
+} from '@throws';
+import { ICurrentUser } from '@models';
 import { RequestHandler } from 'express';
 
 // Расширяем Request ролью и id текущего пользователя
-export interface AuthRequest extends Request {
+export interface IAuthRequest extends Request {
   user?: ICurrentUser;
 }
 
@@ -40,7 +40,7 @@ function authenticateJWT(
       }
 
       // Преобразуем User в ICurrentUser
-      (req as AuthRequest).user = user;
+      (req as IAuthRequest).user = user;
       next();
     },
   )(req, res, next);
@@ -53,7 +53,7 @@ function authenticateJWT(
  */
 function checkRole(role: 'admin' | 'user'): RequestHandler {
   return (req: Request, res: Response, next: NextFunction): void => {
-    const authReq = req as AuthRequest;
+    const authReq = req as IAuthRequest;
     if (!authReq.user) {
       return next(createUnauthorizedError('Не авторизован'));
     }

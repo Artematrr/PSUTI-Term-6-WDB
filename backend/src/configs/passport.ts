@@ -4,10 +4,8 @@ import {
   StrategyOptions,
 } from 'passport-jwt';
 import passport from 'passport';
-import { User } from '../models';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { User } from '@models';
+import 'dotenv/config';
 
 interface JwtPayload {
   id: string;
@@ -45,4 +43,4 @@ passport.use(
   }),
 );
 
-export default passport;
+export { passport };

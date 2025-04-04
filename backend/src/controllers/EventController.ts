@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import EventService from '../services/EventService';
-import { IEventData, ICurrentUser } from '../models';
-import { AuthRequest } from '../middlewares/auth.middleware';
+import { EventService } from '@services';
+import { IEventData, ICurrentUser } from '@models';
+import { IAuthRequest } from '@middlewares/auth.middleware';
 
 class EventController {
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -36,7 +36,7 @@ class EventController {
 
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const authReq = req as AuthRequest;
+      const authReq = req as IAuthRequest;
       const eventData: IEventData = {
         ...req.body,
         createdBy: authReq.user?.id,
@@ -56,7 +56,7 @@ class EventController {
 
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const authReq = req as AuthRequest;
+      const authReq = req as IAuthRequest;
       const result = await EventService.updateEvent(
         req.params.id,
         req.body,
@@ -75,7 +75,7 @@ class EventController {
 
   async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const authReq = req as AuthRequest;
+      const authReq = req as IAuthRequest;
       await EventService.deleteEvent(
         req.params.id,
         authReq.user as ICurrentUser,

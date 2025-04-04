@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import UserService from '../services/UserService';
-import { IUserData, UserRole, ICurrentUser } from '../models';
-import { AuthRequest } from '../middlewares/auth.middleware';
+import { UserService } from '@services';
+import { IUserData, UserRole, ICurrentUser } from '@models';
+import { IAuthRequest } from '@/middlewares/auth.middleware';
 
 class UserController {
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -45,7 +45,7 @@ class UserController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const authReq = req as AuthRequest;
+      const authReq = req as IAuthRequest;
       const { role } = req.body as { role: UserRole };
       const userId = req.params.id;
 

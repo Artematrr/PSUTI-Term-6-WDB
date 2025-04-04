@@ -1,15 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import { User, IRegisterData, ILoginData, IAuthResponse } from '../models';
+import 'dotenv/config';
+import { User, IRegisterData, ILoginData, IAuthResponse } from '@models';
 import {
   createValidationError,
   createNotFoundError,
   createServerError,
   CustomError,
-} from '../throws';
-
-dotenv.config();
+} from '@throws';
 
 class AuthService {
   async register(userData: IRegisterData): Promise<IAuthResponse> {

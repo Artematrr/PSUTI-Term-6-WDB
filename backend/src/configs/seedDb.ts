@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { User, Event } from '../models';
+import { User, Event } from '@models';
 
 interface UserData {
   name: string;

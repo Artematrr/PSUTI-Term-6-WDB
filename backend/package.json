@@ -4,8 +4,8 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"npx tsx src/index.ts\"",
+    "test": "echo 'Error: no test specified' && exit 1",
+    "dev": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'npx tsx --require tsconfig-paths/register src/index.ts'",
     "tsc": "tsc",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
@@ -49,6 +49,7 @@
     "globals": "^16.0.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.5.3",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.29.0"
