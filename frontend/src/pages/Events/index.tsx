@@ -3,6 +3,7 @@ import EventList from './components/EventList';
 import { getEvents } from '../../api/eventService';
 import { ErrorNotification } from '../../components/ErrorNotification';
 import { EventData } from '../../types/event';
+import { DateRangePicker } from './components/DateRangePicker';
 
 const Events = () => {
   const [events, setEvents] = useState<EventData[]>([]);
@@ -11,11 +12,16 @@ const Events = () => {
     message: string;
     status: number;
   } | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const fetchEvents = async () => {
     try {
       setIsLoading(true);
-      const data = await getEvents();
+      const data = await getEvents(
+        startDate ? startDate.toISOString() : undefined,
+        endDate ? endDate.toISOString() : undefined,
+      );
       setEvents(data);
       setError(null);
     } catch (error: unknown) {
@@ -41,11 +47,17 @@ const Events = () => {
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [startDate, endDate]);
 
   return (
     <div className="container">
       <h1 className="title">Мероприятия</h1>
+      <DateRangePicker
+        startDate={startDate}
+        endDate={endDate}
+        onStartDateChange={setStartDate}
+        onEndDateChange={setEndDate}
+      />
       {isLoading && <p className="paragraph">Загрузка мероприятий...</p>}
       {error && (
         <ErrorNotification

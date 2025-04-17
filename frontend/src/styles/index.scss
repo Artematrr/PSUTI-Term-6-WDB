@@ -143,7 +143,6 @@ svg * {
   --transition-duration: 0.2s;
   --transition-function: ease;
   --header-height: 3.5rem;
-
 }
 
 #root {
@@ -255,3 +254,32 @@ svg * {
   }
 }
 
+/* Datepicker */
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px solid var(--primary-light);
+  border-radius: var(--border-radius);
+
+  &:focus-visible {
+    outline-color: var(--primary-dark);
+  }
+}
+
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range {
+  background-color: var(--primary-light) !important;
+  color: var(--light) !important;
+}
+
+.react-datepicker__day--in-selecting-range:not([aria-disabled='true']):hover,
+.react-datepicker__day--in-range:not([aria-disabled='true']):hover,
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--primary-dark) !important;
+  color: var(--light) !important;
+}
+
+.react-datepicker__tab-loop {
+  position: absolute;
+}
