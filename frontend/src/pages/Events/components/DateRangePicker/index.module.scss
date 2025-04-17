@@ -1,0 +1,21 @@
+.datepicker {
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+  &__container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .datepicker {
+    &__container {
+      grid-template-columns: 1fr;
+    }
+  }
+}

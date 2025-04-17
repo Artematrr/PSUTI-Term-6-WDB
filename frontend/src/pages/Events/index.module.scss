@@ -1,0 +1,38 @@
+.events-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 2rem;
+}
+
+.event {
+  background-color: var(--light);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  transition:
+    transform var(--transition-duration) var(--transition-function),
+    box-shadow var(--transition-duration) var(--transition-function);
+
+  &:hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 1rem;
+  }
+
+  &__description {
+    color: var(--dark);
+  }
+
+  &__date {
+    color: var(--dark);
+  }
+
+  &__createdBy {
+    color: var(--dark);
+  }
+}
